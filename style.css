@@ -1,0 +1,6 @@
+li {
+    display: flex;
+    align-items: left;
+    list-style: circle;
+}
+
