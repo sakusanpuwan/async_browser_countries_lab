@@ -1,3 +1,6 @@
+// try to separate methods - follow single reponsibility methods
+// no need for multiple fetches maybe could produce a country list then access names,flags and population
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // use the DOM to access HTML element
@@ -9,6 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // will wait for fetch to be completed and promises that something will be returned 
         const response = await fetch("https://restcountries.com/v3.1/all")
+
+        // countries API returns an array of countries - each country is an object - name is in the object
+        // go to API inspect elements console -> try json[0].name.common to test 
+        // json.map((country) => {return country.name.common}) 
         
         // returns the reponse in JSON format so we can access it
         const jsonData = await response.json()
@@ -37,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             newCountry.textContent = countriesNames[i];
             const newFlag = document.createElement("img");
             newFlag.src = countriesFlags[i];
+            newFlag.classList.add("flag");
             newFlag.height = 15;
             newFlag.width = 15;
             newCountry.appendChild(newFlag);
@@ -55,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const countriesPopulation = jsonData.map((country) => country.population);
 
-        const populationTotal = countriesPopulation.reduce((reducer,population) => reducer + population );
+        const populationTotal = countriesPopulation.reduce((reducer,population) => reducer + population, 0 );
 
         const header = document.getElementById("population-heading");
 
